@@ -1,11 +1,15 @@
 #%%
 from xml.dom import minidom
-import os
-import sys
+from pathlib import Path
 
-pfad = r"D:\informatik_programme\software_projekte\swp2018\tests\testcorpus"
+files_path = "tests/corpus/"
 
-def get_coordinate_file_dict(pfad):
+
+def generate_file_list(path):
+    return Path(path).glob(f"**/*.xml")
+
+
+def get_coordinate_file_dict(path):
     """
         Gibt ein Dictionary zurück, wobei die keys die Namen der XML-Files sind 
         und die Values wiederum Dictionaries sind, deren Keys die IDs der Elternknoten
@@ -21,27 +25,25 @@ def get_coordinate_file_dict(pfad):
     
     
     coordinate_dict = {}
-    
-    for root, dirs, files in os.walk(pfad):
-        for file in files:
-            str_pfad = str(os.path.join(root, file))
-            file_name = str_pfad[-8:-4]
-            xml_text = minidom.parse(str_pfad)
-            coordinate_elements = xml_text.getElementsByTagName("Coords")
-            
-            temp_dict = {}
-            
-            for element in coordinate_elements:
-                parent_node_name = element.parentNode.getAttribute("id")
-                points_value = element.attributes["points"].value
-                temp_dict[parent_node_name] = points_value
-            
-            coordinate_dict[file_name] = temp_dict
-    
-    
+
+    for file in generate_file_list(path):
+        file_name = file.stem
+        xml_text = minidom.parse(str(file))
+        coordinate_elements = xml_text.getElementsByTagName("Coords")
+
+        temp_dict = {}
+
+        for element in coordinate_elements:
+            parent_node_name = element.parentNode.getAttribute("id")
+            points_value = element.attributes["points"].value
+            temp_dict[parent_node_name] = points_value
+
+        coordinate_dict[file_name] = temp_dict
+
     return coordinate_dict
 
-print(get_coordinate_file_dict(pfad))
+
+print(get_coordinate_file_dict(files_path))
 
 """
 if __name__ == "__main__":
