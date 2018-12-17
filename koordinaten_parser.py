@@ -3,8 +3,7 @@ from xml.dom import minidom
 import os
 import sys
 
-pfad = r"C:\Users\Jan\Dropbox\Uni Master Digital Humanities\Semester 1 - Softwareprojekte, Graphentheorie & Weitere\1 Softwareprojekte\Programme Softwareprojekte\Pages"
-
+pfad = r"D:\informatik_programme\software_projekte\swp2018\tests\testcorpus"
 
 def get_coordinate_file_dict(pfad):
     """
@@ -42,6 +41,10 @@ def get_coordinate_file_dict(pfad):
     
     return coordinate_dict
 
+print(get_coordinate_file_dict(pfad))
+
+"""
 if __name__ == "__main__":
     pfad = sys.argv[1]
     print(get_coordinate_file_dict(pfad))
+"""
