@@ -2,7 +2,8 @@
 from xml.dom import minidom
 from pathlib import Path
 
-files_path = "tests/corpus/"
+#files_path = "tests/corpus/"
+files_path = "tests/testcorpora/testcorpus2"
 
 
 def generate_file_list(path):
