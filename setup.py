@@ -7,7 +7,9 @@ setup(
     packages=find_packages('src'),
     package_dir={'': 'src'},
     install_requires=[
-        'lxml'
+        'lxml',
+        'pandas',
+        'numpy'
     ],
     url='https://github.com/thvitt/swp2018',
     classifiers=[
