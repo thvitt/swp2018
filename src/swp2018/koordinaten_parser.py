@@ -54,6 +54,12 @@ def get_coordinate_file_dict(path):
 
     return coordinate_dict
 
+np.set_printoptions(suppress=True)
+a = get_coordinate_file_dict(r"D:\informatik_programme\software_projekte\swp2018\resources\testcorpora\testcorpus2")
+with open("aab2.txt", mode="w") as f:
+    f.write(str(a))
+
+
 
 def calculate_bounding_box(coordinates):
     """Function which calculates the bounding box from a list of coordinates.
