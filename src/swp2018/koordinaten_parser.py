@@ -53,3 +53,33 @@ def get_coordinate_file_dict(path):
         coordinate_dict[file_name] = temp_dict
 
     return coordinate_dict
+
+
+def calculate_bounding_box(coordinates):
+    """Function which calculates the bounding box from a list of coordinates.
+
+    Args:
+        coordinates (list): A list of coordinates which are stored in tuples (x, y).
+    Returns:
+        A tuple containing the bounding box coordinates.
+    """
+
+    if len(coordinates) == 0:
+        raise ValueError("A bounding box for zero coordinates can't be calculated")
+
+    minx = float("inf")
+    miny = float("inf")
+    maxx = float("-inf")
+    maxy = float("-inf")
+
+    for x, y in coordinates:
+        if x < minx:
+            minx = x
+        if x > maxx:
+            maxx = x
+        if y < miny:
+            miny = y
+        if y > maxy:
+            maxy = y
+
+    return tuple((minx, miny, maxx, maxy))
