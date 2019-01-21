@@ -18,27 +18,25 @@ class DataModel:
     @staticmethod
     # Create Dataframes
     def create_pages_df():
-        return pd.DataFrame(columns=["pageNum", "height", "width", "textRegID",
-                                     "text", "coord_A", "coord_B", "coord_C",
-                                     "coord_D", "creator", "created", "lastChange"])
+        return pd.DataFrame(columns=["filename", "height", "width", "text_reg_id",
+                                     "text", "coordinates", "creator", "created", "last_change"])
 
     @staticmethod
     def create_textlines_df():
         return pd.DataFrame(columns=["id", "textline", "coord_A", "coord_B", "coord_C", "coord_D", "pageNum"])
 
     # Insert Data
-    def insert_page_data(self, pageNum, height, width, text, A, B, C, D, textRegID ="no_info",
-                         creator ="no_info", created = "no_info", lastChange ="no_info"):
+    def insert_page_data(self, filename, height, width, text, coordinates, text_reg_id ="no_info",
+                         creator="no_info", created = "no_info", last_change ="no_info"):
         
-        self.pages_df = self.pages_df.append({"pageNum": pageNum, "height": height, "width": width,
-                                              "textRegID": textRegID, "text": text, "coord_A": A, "coord_B": B,
-                                              "coord_C": C, "coord_D": D, "creator": creator, "created": created,
-                                              "lastChange": lastChange}, ignore_index=True)
+        self.pages_df = self.pages_df.append({"filename": filename, "height": height, "width": width,
+                                              "text_reg_id": text_reg_id, "text": text, "coordinates": coordinates,
+                                              "creator": creator, "created": created, "lastChange": last_change},
+                                             ignore_index=True)
         
-    def insert_textlines_data(self, id_, textline, A, B, C, D, pageNum):
+    def insert_textlines_data(self, id_, textline, coordinates, pageNum):
         
-        self.textlines_df = self.textlines_df.append({"id": id_, "textline": textline, "coord_A": A,
-                                                      "coord_B": B, "coord_C": C, "coord_D": D, "pageNum": pageNum},
-                                                     ignore_index=True)
+        self.textlines_df = self.textlines_df.append({"id": id_, "textline": textline, "coordinates": coordinates,
+                                                      "pageNum": pageNum}, ignore_index=True)
     
     # Get Data
