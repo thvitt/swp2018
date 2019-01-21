@@ -22,7 +22,7 @@ def get_coordinate_file_dict(path):
         Args:
             path (str): Path to the desired directory.
         Returns:
-            A dictionary a nested dictionary where the keys of the primary dictionary represent the file names
+            A nested dictionary where the keys of the primary dictionary represent the file names
             and the keys of the nested dictionaries represent the region identifier. The values of the  nested
             dictionaries hold the coordinates of the corresponding region which are stored in a numpy array.
         
