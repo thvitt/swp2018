@@ -17,7 +17,7 @@ def generate_file_list(path, file_extension=".xml"):
     return Path(path).glob("**/*{}".format(file_extension))
 
 
-def get_coordinate_file_dict(path):
+def parse_xml_structure(path):
     """
         Args:
             path (str): Path to the desired directory.
@@ -47,12 +47,16 @@ def get_coordinate_file_dict(path):
 
         for element in coordinate_elements:
             parent_node_name = element.parentNode.getAttribute("id")
-            points_value = element.attributes["points"].value
-            coordinates = np.array([tuple(coo.split(",")) for coo in points_value.split()]).astype(np.int_)
-            temp_dict[parent_node_name] = coordinates
+            temp_dict[parent_node_name] = extract_coordinates(parent_node_name)
         coordinate_dict[file_name] = temp_dict
 
     return coordinate_dict
+
+
+def extract_coordinates(xml_element):
+    points_value = xml_element.attributes["points"].value
+    coordinates = np.array([tuple(coo.split(",")) for coo in points_value.split()]).astype(np.int_)
+    return coordinates
 
 
 def calculate_bounding_box(coordinates):
