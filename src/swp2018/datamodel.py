@@ -1,6 +1,7 @@
 import pathlib
 
 import pandas as pd
+from . import parser
 
 
 class DataModel:
@@ -15,9 +16,8 @@ class DataModel:
         self.pages_df = self.create_pages_df()
         self.textlines_df = self.create_textlines_df()
 
-
     # getter
-    
+
     def get_pages_df(self):
         return self.pages_df
     
