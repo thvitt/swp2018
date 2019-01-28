@@ -1,11 +1,18 @@
+import pathlib
+
 import pandas as pd
 
 
 class DataModel:
 
-    def __init__(self):
+    def __init__(self, project_dir=pathlib.Path.cwd(), input_dir=pathlib.Path.cwd().joinpath("/input"),
+                 output_dir=pathlib.Path.cwd().joinpath("/output")):
+        self.project_dir = project_dir
+        self.input_dir = input_dir
+        self.output_dir = output_dir
         self.pages_df = self.create_pages_df()
         self.textlines_df = self.create_textlines_df()
+
 
     # getter
     
