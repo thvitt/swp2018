@@ -7,7 +7,7 @@ setup(
     packages=find_packages('src'),
     package_dir={'': 'src'},
     install_requires=[
-        'lxml',
+        'xml.dom',
         'pandas',
         'numpy'
     ],
