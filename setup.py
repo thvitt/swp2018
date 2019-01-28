@@ -11,6 +11,7 @@ setup(
         'pandas',
         'numpy'
     ],
+    tests_require=['pytest'],
     url='https://github.com/thvitt/swp2018',
     classifiers=[
         'Programming Language :: Python :: 3'
