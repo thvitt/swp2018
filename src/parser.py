@@ -1,3 +1,10 @@
+"""
+
+    The parser class provides methods that allows the user to parse xml files created
+    by OCR programms like OCR4all and to extract and structure coordinates. 
+
+"""
+
 from xml.dom import minidom
 import numpy as np
 
@@ -5,11 +12,14 @@ from pathlib import Path
 
 
 def generate_file_list(path, file_extension=".xml"):
-    """Returns a Generator with all files that will be processed.
+    """
+    
+    Generates a generator with all files that will be processed.
 
     Args:
-        path (str): Path to the desired directory.
-        file_extension (str): File extension to search for.
+        path (str) -- Path to the desired directory.
+        file_extension (str) -- File extension to search for.
+        
     Returns:
         Generator which contains Path objects to all XML files in the given directory and its subdirectories.
 
@@ -19,8 +29,12 @@ def generate_file_list(path, file_extension=".xml"):
 
 def parse_xml_structure(path):
     """
+        Parses xml file and creates a nested dictionary that contains the filename and the 
+        text region id that belongs to that file as well as the coordinates of the text region.
+    
         Args:
-            path (str): Path to the desired directory.
+            path (str) -- Path to the desired directory.
+            
         Returns:
             A nested dictionary where the keys of the primary dictionary represent the file names
             and the keys of the nested dictionaries represent the region identifier. The values of the  nested
@@ -54,18 +68,33 @@ def parse_xml_structure(path):
 
 
 def extract_coordinates(xml_element):
+    """
+    
+    Function which calculates the bounding box from a list of coordinates.
+
+    Args:
+        coordinates (list) -- A list of coordinates which are stored in tuples (x, y).
+        
+    Returns:
+        A tuple containing the bounding box coordinates.
+        
+    """
     points_value = xml_element.attributes["points"].value
     coordinates = np.array([tuple(coo.split(",")) for coo in points_value.split()]).astype(np.int_)
     return coordinates
 
 
 def calculate_bounding_box(coordinates):
-    """Function which calculates the bounding box from a list of coordinates.
+    """
+    
+    Function which calculates the bounding box from a list of coordinates.
 
     Args:
-        coordinates (list): A list of coordinates which are stored in tuples (x, y).
+        coordinates (list) -- A list of coordinates which are stored in tuples (x, y).
+        
     Returns:
         A tuple containing the bounding box coordinates.
+        
     """
 
     if len(coordinates) == 0:
