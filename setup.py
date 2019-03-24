@@ -9,7 +9,8 @@ setup(
     install_requires=[
         'xml.dom',
         'pandas',
-        'numpy'
+        'numpy',
+        'yaml'
     ],
     tests_require=['pytest'],
     url='https://github.com/thvitt/swp2018',

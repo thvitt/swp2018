@@ -4,11 +4,17 @@
     by OCR programms like OCR4all and to extract and structure coordinates. 
 
 """
+import logging
+from logging_config import setup_logging
+setup_logging()
+logger = logging.getLogger(__name__)
+parser_log = logging.getLogger('parser_logger')
 
-from xml.dom import minidom
+import xml.dom.minidom
 import numpy as np
 
 from pathlib import Path
+
 
 
 def generate_file_list(path, file_extension=".xml"):
@@ -52,17 +58,22 @@ def parse_xml_structure(path):
     
     coordinate_dict = {}
 
-    for file in generate_file_list(path):
-        file_name = file.stem
-        xml_text = minidom.parse(str(file))
-        coordinate_elements = xml_text.getElementsByTagName("Coords")
+    try:
+        for file in generate_file_list(path):
+            file_name = file.stem
+            xml_text = minidom.parse(str(file))
+            coordinate_elements = xml_text.getElementsByTagName("Coords")
 
-        temp_dict = {}
+            temp_dict = {}
 
-        for element in coordinate_elements:
-            parent_node_name = element.parentNode.getAttribute("id")
-            temp_dict[parent_node_name] = extract_coordinates(parent_node_name)
-        coordinate_dict[file_name] = temp_dict
+            for element in coordinate_elements:
+                parent_node_name = element.parentNode.getAttribute("id")
+                temp_dict[parent_node_name] = extract_coordinates(parent_node_name)
+            coordinate_dict[file_name] = temp_dict
+            parser_log.info('Successfully created coordinate_dict')
+    except Exception as e:
+        logger.error('Could not create coordinate_dict')
+        parser_log.error('Could not create coordinate_dict')
 
     return coordinate_dict
 
@@ -79,8 +90,13 @@ def extract_coordinates(xml_element):
         A tuple containing the bounding box coordinates.
         
     """
-    points_value = xml_element.attributes["points"].value
-    coordinates = np.array([tuple(coo.split(",")) for coo in points_value.split()]).astype(np.int_)
+    try:
+        points_value = xml_element.attributes["points"].value
+        coordinates = np.array([tuple(coo.split(",")) for coo in points_value.split()]).astype(np.int_)
+        parser_log.info('Successfully extracted coordinates.')
+    except Exception as e:
+        logger.error('Could not extract coordinates.')
+        parser_log.error('Could not extract coordinates.')
     return coordinates
 
 
@@ -99,9 +115,11 @@ def calculate_bounding_box(coordinates):
 
     if len(coordinates) == 0:
         raise ValueError("A bounding box for zero coordinates can't be calculated")
+        parser_log.error("A bounding box for zero coordinates can't be calculated")
 
     if type(coordinates) == str:
         raise TypeError("The coordinates must be a list, not a string")
+        parser_log.error("The coordinates must be a list, not a string")
 
     minx = float("inf")
     miny = float("inf")

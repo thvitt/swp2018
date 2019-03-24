@@ -6,10 +6,14 @@
 
 
 import pathlib
-
 import pandas as pd
-from . import parser
+import src.parser as parser
+import logging
+from logging_config import setup_logging
 
+setup_logging()
+logger = logging.getLogger(__name__)
+dm_log = logging.getLogger('datamodel_logger')
 
 class DataModel:
 
@@ -85,10 +89,15 @@ class DataModel:
 
             """
         
-        self.pages_df = self.pages_df.append({"filename": filename, "height": height, "width": width,
+        try:
+            self.pages_df = self.pages_df.append({"filename": filename, "height": height, "width": width,
                                               "text_reg_id": text_reg_id, "text": text, "reading_order": reading_order,
                                               "coordinates": coordinates, "bbox_a": bbox[0], "bbox_b": bbox[1],
                                               "bbox_c": bbox[2], "bbox_d": bbox[3]}, ignore_index=True)
+            dm_log.info('Page data added to dataframe.')
+        except Exception as e:
+            logger.error('Could not add page data to dataframe.', exc_info=True)
+            dm_log.error('Could not add page data to dataframe.', exc_info=True)
         
     def insert_textlines_data(self, id_, textline, coordinates, bbox, page_num):
         
@@ -114,7 +123,12 @@ class DataModel:
         
         """
         
-        self.textlines_df = self.textlines_df.append({"id": id_, "textline": textline, "coordinates": coordinates,
+        try:
+            self.textlines_df = self.textlines_df.append({"id": id_, "textline": textline, "coordinates": coordinates,
                                                       "bbox_a": bbox[0], "bbox_b": bbox[1], "bbox_c": bbox[2],
                                                       "bbox_d": bbox[3], "page_id": page_id}, ignore_index=True)
+            dm_log.info('Textline data added to dataframe.')
+        except Exception as e:
+            logger.error('Could not add textline data to dataframe.', exc_info=True)
+            dm_log.error('Could not add textline data to dataframe.', exc_info=True)
     
