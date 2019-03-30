@@ -15,6 +15,7 @@ setup_logging()
 logger = logging.getLogger(__name__)
 dm_log = logging.getLogger('datamodel_logger')
 
+
 class DataModel:
 
     def __init__(self, project_dir=pathlib.Path.cwd(), input_dir=pathlib.Path.cwd().joinpath("/input"),
@@ -61,7 +62,6 @@ class DataModel:
         return pd.DataFrame(columns=["id", "textline", "coordinates", "bbox_a", "bbox_b", "bbox_c", "bbox_d",
                                      "page_id"])
 
-
     def insert_page_data(self, filename, height, width, text, reading_order, coordinates, bbox,
                              text_reg_id="no_info"):
         """
@@ -99,7 +99,7 @@ class DataModel:
             logger.error('Could not add page data to dataframe.', exc_info=True)
             dm_log.error('Could not add page data to dataframe.', exc_info=True)
         
-    def insert_textlines_data(self, id_, textline, coordinates, bbox, page_num):
+    def insert_textlines_data(self, id_, textline, coordinates, bbox, page_id):
         
         """
         
