@@ -7,10 +7,9 @@ setup(
     packages=find_packages('src'),
     package_dir={'': 'src'},
     install_requires=[
-        'xml.dom',
         'pandas',
         'numpy',
-        'yaml'
+        'pyyaml'
     ],
     tests_require=['pytest'],
     url='https://github.com/thvitt/swp2018',
