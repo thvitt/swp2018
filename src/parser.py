@@ -114,12 +114,12 @@ def calculate_bounding_box(coordinates):
     """
 
     if len(coordinates) == 0:
-        raise ValueError("A bounding box for zero coordinates can't be calculated")
         parser_log.error("A bounding box for zero coordinates can't be calculated")
+        raise ValueError("A bounding box for zero coordinates can't be calculated")
 
     if type(coordinates) == str:
-        raise TypeError("The coordinates must be a list, not a string")
         parser_log.error("The coordinates must be a list, not a string")
+        raise TypeError("The coordinates must be a list, not a string")
 
     minx = float("inf")
     miny = float("inf")
