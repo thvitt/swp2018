@@ -25,7 +25,7 @@ def open_target_dict(path):
         return target_dict
     except Exception as e:
         logger.error('Failed to open file.', exc_info=True)
-        test_parser_log('Failed to open file.', exc_info=True)
+        test_parser_log.error('Failed to open file.', exc_info=True)
 
 
 def get_target_dict(path):
