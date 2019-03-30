@@ -72,8 +72,8 @@ def parse_xml_structure(path):
             coordinate_dict[file_name] = temp_dict
             parser_log.info('Successfully created coordinate_dict')
     except Exception as e:
-        logger.error('Could not create coordinate_dict')
-        parser_log.error('Could not create coordinate_dict')
+        logger.error('Could not create coordinate_dict', exc_info=True)
+        parser_log.error('Could not create coordinate_dict', exc_info=True)
 
     return coordinate_dict
 
@@ -95,8 +95,8 @@ def extract_coordinates(xml_element):
         coordinates = np.array([tuple(coo.split(",")) for coo in points_value.split()]).astype(np.int_)
         parser_log.info('Successfully extracted coordinates.')
     except Exception as e:
-        logger.error('Could not extract coordinates.')
-        parser_log.error('Could not extract coordinates.')
+        logger.error('Could not extract coordinates.', exc_info=True)
+        parser_log.error('Could not extract coordinates.', exc_info=True)
     return coordinates
 
 
