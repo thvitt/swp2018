@@ -31,16 +31,11 @@ class DataModel:
 
     @staticmethod
     def create_pages_df():
-        """
+        """Creates a default pandas DataFrame for page data. The created DataFrame contains the following columns: 
+            page_id, height, width, text_reg_id, reading_order, text, coordinates, bbox_a, bbox_b, bbox_c, bbox_d.
 
-        Creates a default pandas dataframe for page data.
-        The created dataframe has the following columns: page_id, height, width, text_reg_id, reading_order, text,
-        coordinates, bbox_a, bbox_b, bbox_c, bbox_d
-
-        Returns:
-            pandas dataframe: default dataframe 
-
-
+            Returns:
+                Default pandas DataFrame.
         """
 
         return pd.DataFrame(columns=["page_id", "height", "width", "text_reg_id", "reading_order", "text",
@@ -49,44 +44,33 @@ class DataModel:
     @staticmethod
     def create_textlines_df():
 
-        """
+        """Creates a default pandas DataFrame for textlines data. The created DataFrame contains the following columns: 
+            id, textline, coordinates, bbox_a, bbox_b, bbox_c, bbox_d, page_id.
 
-        Creates a default pandas dataframe for textlines data.
-        The created dataframe has the following columns: id, textline, coordinates, bbox_a, bbox_b, bbox_c, bbox_d, page_id
-
-        Returns:
-            pandas dataframe: default dataframe 
-
-
+            Returns:
+                Default pandas DataFrame.
         """
         return pd.DataFrame(columns=["id", "textline", "coordinates", "bbox_a", "bbox_b", "bbox_c", "bbox_d",
                                      "page_id"])
 
     def insert_page_data(self, filename, height, width, text, reading_order, coordinates, bbox,
                              text_reg_id="no_info"):
-        """
+        """Inserts page data into the pandas DataFrame created by create_pages_df().
 
-        Inserts page data into the pandas dataframe created by create_pages_df()
-
-
-        Args:
-            page_id (int) -- page number 
-            height (int) -- height value of page
-            width (int) -- width value of page
-            text_reg_id (integer list) -- can be one or more ids of text regions
-            reading_order (dict) -- reading order position as key and text region id as value for defining the reading order of the text regions
-            text (str) -- text of a page
-            coordinates (dict) -- text region id as key and list of coordinates as value
-            bbox_a (list) -- lower left corner of bounding box, list[0] as x coordinate, list[1] as y coordinate
-            bbox_b (list) -- lower right corner of bounding box, list[0] as x coordinate, list[1] as y coordinate
-            bbox_c (list) -- upper right corner of bounding box, list[0] as x coordinate, list[1] as y coordinate
-            bbox_d (list) -- upper left corner of bounding box, list[0] as x coordinate, list[1] as y coordinate
-
-
-        Returns:
-            pandas dataframe: dataframe with page data
-
-
+            Args:
+                page_id (int) -- page number.
+                height (int) -- height value of page.
+                width (int) -- width value of page.
+                text_reg_id (integer list) -- can be one or more ids of text regions.
+                reading_order (dict) -- reading order position as key and text region id as value for defining the reading order of the text regions.
+                text (str) -- text of a page.
+                coordinates (dict) -- text region id as key and list of coordinates as value.
+                bbox_a (list) -- lower left corner of bounding box, list[0] as x coordinate, list[1] as y coordinate.
+                bbox_b (list) -- lower right corner of bounding box, list[0] as x coordinate, list[1] as y coordinate.
+                bbox_c (list) -- upper right corner of bounding box, list[0] as x coordinate, list[1] as y coordinate.
+                bbox_d (list) -- upper left corner of bounding box, list[0] as x coordinate, list[1] as y coordinate.
+            Returns:
+                Pandas DataFrame with page data.
             """
         
         try:
@@ -101,26 +85,19 @@ class DataModel:
         
     def insert_textlines_data(self, id_, textline, coordinates, bbox, page_id):
         
-        """
-        
-        Inserts textlines data into the pandas dataframe created by create_textlines_df()
+        """Inserts textlines data into the pandas DataFrame created by create_textlines_df().
 
-        
-        Args:
-            id (int) -- id of textline
-            textline (str) -- text in textline 
-            coordinates (integer list) -- coordinates of textline 
-            bbox_a (list) -- lower left corner of bounding box, list[0] as x coordinate, list[1] as y coordinate
-            bbox_b (list) -- lower right corner of bounding box, list[0] as x coordinate, list[1] as y coordinate
-            bbox_c (list) -- upper right corner of bounding box, list[0] as x coordinate, list[1] as y coordinate
-            bbox_d (list) -- upper left corner of bounding box, list[0] as x coordinate, list[1] as y coordinate
-            page_id (id) -- page number of the page that contains this textline 
-        
-        
-        Returns:
-            pandas dataframe: dataframe with textlines data
-
-        
+            Args:
+                id (int) -- id of textline.
+                textline (str) -- text in textline.
+                coordinates (integer list) -- coordinates of textline.
+                bbox_a (list) -- lower left corner of bounding box, list[0] as x coordinate, list[1] as y coordinate.
+                bbox_b (list) -- lower right corner of bounding box, list[0] as x coordinate, list[1] as y coordinate.
+                bbox_c (list) -- upper right corner of bounding box, list[0] as x coordinate, list[1] as y coordinate.
+                bbox_d (list) -- upper left corner of bounding box, list[0] as x coordinate, list[1] as y coordinate.
+                page_id (id) -- page number of the page that contains this textline. 
+            Returns:
+                pandas dataframe: dataframe with textlines data   
         """
         
         try:
