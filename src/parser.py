@@ -68,7 +68,7 @@ def parse_xml_structure(path):
 
             for element in coordinate_elements:
                 parent_node_name = element.parentNode.getAttribute("id")
-                temp_dict[parent_node_name] = extract_coordinates(parent_node_name)
+                temp_dict[parent_node_name] = extract_coordinates(element)
             coordinate_dict[file_name] = temp_dict
             parser_log.info('Successfully created coordinate_dict')
     except Exception as e:
