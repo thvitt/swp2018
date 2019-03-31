@@ -10,7 +10,7 @@ setup_logging()
 logger = logging.getLogger(__name__)
 parser_log = logging.getLogger('parser_logger')
 
-import xml.dom.minidom
+import xml.dom.minidom as minidom
 import numpy as np
 
 from pathlib import Path
@@ -35,8 +35,8 @@ def generate_file_list(path, file_extension=".xml"):
 
 def parse_xml_structure(path):
     """
-        Parses xml file and creates a nested dictionary that contains the filename and the 
-        text region id that belongs to that file as well as the coordinates of the text region.
+        Parses XML file and creates a nested dictionary that contains the filename and the 
+        text region id that belongs to this file as well as the coordinates of the text region:
     
         Args:
             path (str) -- Path to the desired directory.
@@ -51,8 +51,8 @@ def parse_xml_structure(path):
            [751, 930], [751, 960], [338, 960]]}
 
            Where:
-           0001 = file name
-           r0 & r0_012 = region identifier
+           "0001" = file name
+           "r0" & "r0_012" = region identifier
            [[1, 1], [1221, 1], [1221, 1748], [1, 1748]] = coordinates of the region r0
     """
     
@@ -77,17 +77,14 @@ def parse_xml_structure(path):
 
     return coordinate_dict
 
-
+#%%
 def extract_coordinates(xml_element):
-    """
-    
-    Function which calculates the bounding box from a list of coordinates.
+    """Extracts the coordinates from the @point-attribute of a given XML-element and returns them as a numpay array.
 
     Args:
-        coordinates (list) -- A list of coordinates which are stored in tuples (x, y).
-        
+        xml_element (string) -- Name of the XML-element.       
     Returns:
-        A tuple containing the bounding box coordinates.
+        Numpy Array containing the bounding box coordinates.
         
     """
     try:
@@ -101,16 +98,12 @@ def extract_coordinates(xml_element):
 
 
 def calculate_bounding_box(coordinates):
-    """
-    
-    Function which calculates the bounding box from a list of coordinates.
+    """Calculates the bounding box from a list of coordinates.
 
     Args:
         coordinates (list) -- A list of coordinates which are stored in tuples (x, y).
-        
     Returns:
-        A tuple containing the bounding box coordinates.
-        
+        Tuple containing the bounding box coordinates.     
     """
 
     if len(coordinates) == 0:
