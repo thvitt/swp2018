@@ -30,7 +30,7 @@ def generate_file_list(path, file_extension=".xml"):
         Generator which contains Path objects to all XML files in the given directory and its subdirectories.
 
     """
-    return Path(path).glob("**/*{}".format(file_extension))
+    return sorted(Path(path).glob("**/*{}".format(file_extension)))
 
 
 def parse_xml_structure(path):
