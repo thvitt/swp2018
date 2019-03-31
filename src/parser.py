@@ -62,7 +62,13 @@ def parse_xml_structure(path):
     try:
         for file in generate_file_list(path):
             file_name = file.stem
-            xml_text = etree.parse(file.as_posix())
+            try:
+                xml_text = etree.parse(file.as_posix())
+            except etree.XMLSyntaxError:
+                logger.error('Could not parse XML because of syntax error.')
+                parser_log.error('Could not parse XML because of syntax error.')
+                continue
+
             coordinate_elements = xml_text.findall(".//gts:Coords", namespaces=pagexml_ns)
 
             temp_dict = {}
