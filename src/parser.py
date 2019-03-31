@@ -32,13 +32,14 @@ def generate_file_list(path, file_extension=".xml"):
     return sorted(Path(path).glob("**/*{}".format(file_extension)))
 
 
-def parse_xml_structure(path):
+def parse_xml_structure(path, validate=False):
     """
         Parses XML file and creates a nested dictionary that contains the filename and the
         text region id that belongs to this file as well as the coordinates of the text region:
 
         Args:
             path (str) -- Path to the desired directory.
+            validate (bool) -- Whether to validate the XML files against their schemas.
 
         Returns:
             A nested dictionary where the keys of the primary dictionary represent the file names
@@ -64,6 +65,14 @@ def parse_xml_structure(path):
             file_name = file.stem
             try:
                 xml_text = etree.parse(file.as_posix())
+                if validate:
+                    if validate_xml(xml_text):
+                        logger.info('XML is well formed and valid.')
+                        parser_log.info('XML is well formed and valid.')
+                    else:
+                        logger.error('XML is invalid.')
+                        parser_log.error('XML is invalid.')
+                        continue
             except etree.XMLSyntaxError:
                 logger.error('Could not parse XML because of syntax error.')
                 parser_log.error('Could not parse XML because of syntax error.')
@@ -137,3 +146,19 @@ def calculate_bounding_box(coordinates):
             maxy = y
 
     return tuple((minx, miny, maxx, maxy))
+
+
+def validate_xml(xml_element):
+    """Validates a XML file against a PAGEXML schema.
+
+    Args:
+        xml_element (obj) -- Instance containing a parsed XML file.
+    Returns:
+        Boolean which indicates whether the XML file is valid or not.
+    """
+
+    xmlschema_doc = etree.parse(str((Path(__file__).parent / "../resources/schemes/PAGE_2017_07_15.xsd").resolve()))
+    xmlschema = etree.XMLSchema(xmlschema_doc)
+
+    return xmlschema.validate(xml_element)
+
